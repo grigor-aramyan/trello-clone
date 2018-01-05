@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d101b624-61a4-4ecf-a54e-25163ec6890a" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/.gitignore" />
+      <change beforePath="$PROJECT_DIR$/Main.elm" afterPath="$PROJECT_DIR$/Main.elm" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/build-artifacts/0.18.0/user/project/1.0.0/Main.elmi" afterPath="$PROJECT_DIR$/elm-stuff/build-artifacts/0.18.0/user/project/1.0.0/Main.elmi" />
+      <change beforePath="$PROJECT_DIR$/elm-stuff/build-artifacts/0.18.0/user/project/1.0.0/Main.elmo" afterPath="$PROJECT_DIR$/elm-stuff/build-artifacts/0.18.0/user/project/1.0.0/Main.elmo" />
     </list>
     <ignored path="$PROJECT_DIR$/.idea/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -17,8 +19,8 @@
       <file leaf-file-name="Main.elm" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Main.elm">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="833">
-              <caret line="49" column="36" lean-forward="false" selection-start-line="49" selection-start-column="36" selection-end-line="49" selection-end-column="36" />
+            <state relative-caret-position="322">
+              <caret line="110" column="12" lean-forward="false" selection-start-line="110" selection-start-column="12" selection-end-line="110" selection-end-column="12" />
               <folding />
             </state>
           </provider>
@@ -37,8 +39,8 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/Main.elm" />
         <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/Main.elm" />
       </list>
     </option>
   </component>
@@ -71,11 +73,6 @@
             <path>
               <item name="trello-clone" type="b2602c69:ProjectViewProjectNode" />
               <item name="trello-clone" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="trello-clone" type="b2602c69:ProjectViewProjectNode" />
-              <item name="trello-clone" type="462c0819:PsiDirectoryNode" />
-              <item name="elm-stuff" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -269,8 +266,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Main.elm">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="833">
-          <caret line="49" column="36" lean-forward="false" selection-start-line="49" selection-start-column="36" selection-end-line="49" selection-end-column="36" />
+        <state relative-caret-position="322">
+          <caret line="110" column="12" lean-forward="false" selection-start-line="110" selection-start-column="12" selection-end-line="110" selection-end-column="12" />
           <folding />
         </state>
       </provider>

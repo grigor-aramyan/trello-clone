@@ -1,26 +1,163 @@
 var _user$project$Main$subscriptions = function (model) {
 	return _elm_lang$core$Platform_Sub$none;
 };
+var _user$project$Main$boardView = function (board) {
+	return A2(
+		_elm_lang$html$Html$li,
+		{ctor: '[]'},
+		{
+			ctor: '::',
+			_0: A2(
+				_elm_lang$html$Html$h3,
+				{ctor: '[]'},
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html$text(board.title),
+					_1: {ctor: '[]'}
+				}),
+			_1: {ctor: '[]'}
+		});
+};
+var _user$project$Main$detailsView = function (model) {
+	return _elm_lang$html$Html$text('details view here');
+};
+var _user$project$Main$Task = F3(
+	function (a, b, c) {
+		return {title: a, completed: b, id: c};
+	});
+var _user$project$Main$Scheduler = F3(
+	function (a, b, c) {
+		return {title: a, currentTask: b, tasks: c};
+	});
+var _user$project$Main$Board = F3(
+	function (a, b, c) {
+		return {title: a, schedulers: b, id: c};
+	});
+var _user$project$Main$update = F2(
+	function (msg, model) {
+		var _p0 = msg;
+		if (_p0.ctor === 'ChangeCurrentBoardIitle') {
+			var oldDashboard = model.dashboard;
+			var newDashboard = _elm_lang$core$Native_Utils.update(
+				oldDashboard,
+				{currentBoardTitle: _p0._0});
+			return {
+				ctor: '_Tuple2',
+				_0: _elm_lang$core$Native_Utils.update(
+					model,
+					{dashboard: newDashboard}),
+				_1: _elm_lang$core$Platform_Cmd$none
+			};
+		} else {
+			var oldDashboard = model.dashboard;
+			var currentBoardTitle = oldDashboard.currentBoardTitle;
+			var newDashboard = _elm_lang$core$Native_Utils.update(
+				oldDashboard,
+				{
+					boards: {
+						ctor: '::',
+						_0: A3(
+							_user$project$Main$Board,
+							currentBoardTitle,
+							{ctor: '[]'},
+							model.currentIndex),
+						_1: oldDashboard.boards
+					},
+					currentBoardTitle: ''
+				});
+			return {
+				ctor: '_Tuple2',
+				_0: _elm_lang$core$Native_Utils.update(
+					model,
+					{dashboard: newDashboard, currentIndex: model.currentIndex + 1}),
+				_1: _elm_lang$core$Platform_Cmd$none
+			};
+		}
+	});
+var _user$project$Main$Dashboard = F2(
+	function (a, b) {
+		return {currentBoardTitle: a, boards: b};
+	});
+var _user$project$Main$Model = F3(
+	function (a, b, c) {
+		return {dashboard: a, currentIndex: b, forwardToDetails: c};
+	});
+var _user$project$Main$initialModel = A3(
+	_user$project$Main$Model,
+	A2(
+		_user$project$Main$Dashboard,
+		'',
+		{ctor: '[]'}),
+	0,
+	false);
+var _user$project$Main$init = {ctor: '_Tuple2', _0: _user$project$Main$initialModel, _1: _elm_lang$core$Platform_Cmd$none};
+var _user$project$Main$AddBoard = {ctor: 'AddBoard'};
+var _user$project$Main$ChangeCurrentBoardIitle = function (a) {
+	return {ctor: 'ChangeCurrentBoardIitle', _0: a};
+};
+var _user$project$Main$indexView = function (model) {
+	return A2(
+		_elm_lang$html$Html$div,
+		{ctor: '[]'},
+		{
+			ctor: '::',
+			_0: A2(
+				_elm_lang$html$Html$input,
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html_Attributes$value(model.dashboard.currentBoardTitle),
+					_1: {
+						ctor: '::',
+						_0: _elm_lang$html$Html_Events$onInput(_user$project$Main$ChangeCurrentBoardIitle),
+						_1: {
+							ctor: '::',
+							_0: _elm_lang$html$Html_Attributes$placeholder('Enter board title'),
+							_1: {ctor: '[]'}
+						}
+					}
+				},
+				{ctor: '[]'}),
+			_1: {
+				ctor: '::',
+				_0: A2(
+					_elm_lang$html$Html$button,
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html_Events$onClick(_user$project$Main$AddBoard),
+						_1: {ctor: '[]'}
+					},
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html$text('Add board'),
+						_1: {ctor: '[]'}
+					}),
+				_1: {
+					ctor: '::',
+					_0: A2(
+						_elm_lang$html$Html$br,
+						{ctor: '[]'},
+						{ctor: '[]'}),
+					_1: {
+						ctor: '::',
+						_0: A2(
+							_elm_lang$html$Html$ul,
+							{ctor: '[]'},
+							A2(_elm_lang$core$List$map, _user$project$Main$boardView, model.dashboard.boards)),
+						_1: {ctor: '[]'}
+					}
+				}
+			}
+		});
+};
 var _user$project$Main$view = function (model) {
 	return A2(
 		_elm_lang$html$Html$div,
 		{ctor: '[]'},
 		{
 			ctor: '::',
-			_0: _elm_lang$html$Html$text('hello, it\'s trello clone'),
+			_0: model.forwardToDetails ? _user$project$Main$detailsView(model) : _user$project$Main$indexView(model),
 			_1: {ctor: '[]'}
 		});
 };
-var _user$project$Main$update = F2(
-	function (msg, model) {
-		var _p0 = msg;
-		return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
-	});
-var _user$project$Main$Model = function (a) {
-	return {something: a};
-};
-var _user$project$Main$initialModel = _user$project$Main$Model('');
-var _user$project$Main$init = {ctor: '_Tuple2', _0: _user$project$Main$initialModel, _1: _elm_lang$core$Platform_Cmd$none};
 var _user$project$Main$main = _elm_lang$html$Html$program(
 	{init: _user$project$Main$init, update: _user$project$Main$update, view: _user$project$Main$view, subscriptions: _user$project$Main$subscriptions})();
-var _user$project$Main$DumbMsg = {ctor: 'DumbMsg'};
