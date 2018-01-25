@@ -29,6 +29,7 @@ type alias Scheduler =
     , tasks : List Task
     , id : Int
     , pendingTaskTitle : String
+    , stable_id : Int
     }
 
 type alias Board =
@@ -120,7 +121,8 @@ update msg model =
                 oldBoardA = List.head (List.filter ( \ board -> board.id == selectedBoardIndex ) model.dashboard.boards)
                 oldBoard = checkBoard oldBoardA
                 title = oldBoard.pendingSchedulerTitle
-                newBoard = { oldBoard | schedulers = ( Scheduler title "" [] model.currentIndex "") :: oldBoard.schedulers
+                newBoard = { oldBoard | schedulers =
+                    List.sortBy .stable_id (( Scheduler title "" [] model.currentIndex "" model.currentIndex ) :: oldBoard.schedulers)
                     , pendingSchedulerTitle = "" }
                 filteredBoards = List.filter ( \ board -> board.id /= selectedBoardIndex ) model.dashboard.boards
                 updatedBoards = newBoard :: filteredBoards
@@ -139,7 +141,7 @@ update msg model =
                 oldScheduler = checkScheduler schedulerA
                 newScheduler = { oldScheduler | pendingTaskTitle = title }
                 filteredSchedulers = List.filter (\ scheduler -> scheduler.id /= oldBoard.activeSchedulerIndex) oldBoard.schedulers
-                updatedBoard = { oldBoard | schedulers = newScheduler :: filteredSchedulers }
+                updatedBoard = { oldBoard | schedulers = List.sortBy .id (newScheduler :: filteredSchedulers) }
                 oldDashboard = model.dashboard
                 filteredBoards = List.filter (\ board -> board.id /= model.selectedBoardIndex) model.dashboard.boards
                 newDashboard = { oldDashboard | boards = updatedBoard :: filteredBoards }
@@ -156,7 +158,7 @@ update msg model =
                     , pendingTaskTitle = ""
                     }
                 filteredSchedulerList = List.filter (\ scheduler -> scheduler.id /= oldBoard.activeSchedulerIndex) oldBoard.schedulers
-                updatedSchedulers = newScheduler :: filteredSchedulerList
+                updatedSchedulers = List.sortBy .stable_id (newScheduler :: filteredSchedulerList)
                 newBoard = { oldBoard | schedulers = updatedSchedulers }
                 filteredBoardList = List.filter (\ board -> board.id == model.selectedBoardIndex) model.dashboard.boards
                 updatedBoards = newBoard :: filteredBoardList
@@ -183,9 +185,9 @@ checkScheduler : Maybe Scheduler -> Scheduler
 checkScheduler a =
     case a of
         Nothing ->
-            Scheduler "" "" [] 0 ""
+            Scheduler "" "" [] 0 "" 0
         Just a ->
-            Scheduler a.title a.currentTask a.tasks a.id a.pendingTaskTitle
+            Scheduler a.title a.currentTask a.tasks a.id a.pendingTaskTitle a.stable_id
 
 
 checkBoard : Maybe Board -> Board

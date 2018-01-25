@@ -30,23 +30,24 @@ var _user$project$Main$Task = F3(
 	function (a, b, c) {
 		return {title: a, completed: b, id: c};
 	});
-var _user$project$Main$Scheduler = F5(
-	function (a, b, c, d, e) {
-		return {title: a, currentTask: b, tasks: c, id: d, pendingTaskTitle: e};
+var _user$project$Main$Scheduler = F6(
+	function (a, b, c, d, e, f) {
+		return {title: a, currentTask: b, tasks: c, id: d, pendingTaskTitle: e, stable_id: f};
 	});
 var _user$project$Main$checkScheduler = function (a) {
 	var _p0 = a;
 	if (_p0.ctor === 'Nothing') {
-		return A5(
+		return A6(
 			_user$project$Main$Scheduler,
 			'',
 			'',
 			{ctor: '[]'},
 			0,
-			'');
+			'',
+			0);
 	} else {
 		var _p1 = _p0._0;
-		return A5(_user$project$Main$Scheduler, _p1.title, _p1.currentTask, _p1.tasks, _p1.id, _p1.pendingTaskTitle);
+		return A6(_user$project$Main$Scheduler, _p1.title, _p1.currentTask, _p1.tasks, _p1.id, _p1.pendingTaskTitle, _p1.stable_id);
 	}
 };
 var _user$project$Main$Board = F5(
@@ -164,17 +165,23 @@ var _user$project$Main$update = F2(
 				var newBoard = _elm_lang$core$Native_Utils.update(
 					oldBoard,
 					{
-						schedulers: {
-							ctor: '::',
-							_0: A5(
-								_user$project$Main$Scheduler,
-								title,
-								'',
-								{ctor: '[]'},
-								model.currentIndex,
-								''),
-							_1: oldBoard.schedulers
-						},
+						schedulers: A2(
+							_elm_lang$core$List$sortBy,
+							function (_) {
+								return _.stable_id;
+							},
+							{
+								ctor: '::',
+								_0: A6(
+									_user$project$Main$Scheduler,
+									title,
+									'',
+									{ctor: '[]'},
+									model.currentIndex,
+									'',
+									model.currentIndex),
+								_1: oldBoard.schedulers
+							}),
 						pendingSchedulerTitle: ''
 					});
 				var filteredBoards = A2(
@@ -238,7 +245,12 @@ var _user$project$Main$update = F2(
 				var updatedBoard = _elm_lang$core$Native_Utils.update(
 					oldBoard,
 					{
-						schedulers: {ctor: '::', _0: newScheduler, _1: filteredSchedulers}
+						schedulers: A2(
+							_elm_lang$core$List$sortBy,
+							function (_) {
+								return _.id;
+							},
+							{ctor: '::', _0: newScheduler, _1: filteredSchedulers})
 					});
 				var newDashboard = _elm_lang$core$Native_Utils.update(
 					oldDashboard,
@@ -292,7 +304,12 @@ var _user$project$Main$update = F2(
 						return !_elm_lang$core$Native_Utils.eq(scheduler.id, oldBoard.activeSchedulerIndex);
 					},
 					oldBoard.schedulers);
-				var updatedSchedulers = {ctor: '::', _0: newScheduler, _1: filteredSchedulerList};
+				var updatedSchedulers = A2(
+					_elm_lang$core$List$sortBy,
+					function (_) {
+						return _.stable_id;
+					},
+					{ctor: '::', _0: newScheduler, _1: filteredSchedulerList});
 				var newBoard = _elm_lang$core$Native_Utils.update(
 					oldBoard,
 					{schedulers: updatedSchedulers});
