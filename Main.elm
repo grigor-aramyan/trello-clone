@@ -2,7 +2,8 @@ module Main exposing (..)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
-import Html.Events exposing (onClick, onInput)
+import Html.Events exposing (onClick, onInput, onMouseDown)
+import Html5.DragDrop as DragDrop
 
 
 main : Program Never Model Msg
@@ -55,7 +56,7 @@ init =
 
 initialModel : Model
 initialModel =
-    Model (Dashboard "" [] "" 0) 0 False 0
+    Model (Dashboard "" [] "" 0) 0 False 0 DragDrop.init -1
 
 
 -- MODEL
@@ -65,6 +66,8 @@ type alias Model =
      , currentIndex : Int
      , forwardToDetails : Bool
      , selectedBoardIndex : Int
+     , dragDrop : DragDrop.Model Int Int
+     , clickedSchedulerIndex : Int
      }
 
 
@@ -80,11 +83,52 @@ type Msg =
     | ChangeCurrentTaskTitle String
     | AddTask
     | ChangeCurrentSchedulerIndex Int
+    | DragDropMsg (DragDrop.Msg Int Int)
+    | SetClickedSchedulerIndex Int
 
 
 update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
     case msg of
+        DragDropMsg msg_ ->
+            let
+                ( model_, result ) =
+                    DragDrop.update msg_ model.dragDrop
+            in
+                ( { model
+                    | dragDrop = model_
+                    , dashboard =
+                        case result of
+                            Nothing ->
+                                model.dashboard
+
+                            Just ( taskId, newSchedulerId ) ->
+                                let
+                                    activeBoardIndex = model.selectedBoardIndex
+                                    oldBoardA = List.head (List.filter (\ board -> board.id == activeBoardIndex ) model.dashboard.boards )
+                                    oldBoard = checkBoard oldBoardA
+                                    fromSchedulerIndex = model.clickedSchedulerIndex
+                                    fromSchedulerOldA = List.head (List.filter (\ scheduler -> scheduler.id == fromSchedulerIndex ) oldBoard.schedulers )
+                                    fromSchedulerOld = checkScheduler fromSchedulerOldA
+                                    filteredTasks = List.filter (\ task -> task.id /= taskId ) fromSchedulerOld.tasks
+                                    draggedTaskA = List.head (List.filter (\ task -> task.id == taskId ) fromSchedulerOld.tasks )
+                                    draggedTask = checkTask draggedTaskA
+                                    fromSchedulerNew = { fromSchedulerOld | tasks = filteredTasks }
+                                    toSchedulerOldA = List.head (List.filter (\ scheduler -> scheduler.id == newSchedulerId ) oldBoard.schedulers )
+                                    toSchedulerOld = checkScheduler toSchedulerOldA
+                                    toSchedulerNew = { toSchedulerOld | tasks = draggedTask :: toSchedulerOld.tasks }
+                                    filteredSchedulers = List.filter (\ scheduler -> scheduler.id /= fromSchedulerIndex && scheduler.id /= newSchedulerId ) oldBoard.schedulers
+                                    newBoard = { oldBoard | schedulers = List.sortBy .stable_id (fromSchedulerNew :: toSchedulerNew :: filteredSchedulers) }
+                                    filteredBoards = List.filter ( \ board -> board.id /= activeBoardIndex ) model.dashboard.boards
+                                    updatedBoards = newBoard :: filteredBoards
+                                    oldDashboard = model.dashboard
+                                    newDashboard = { oldDashboard | boards = updatedBoards }
+
+                                in
+                                    newDashboard
+                }, Cmd.none )
+        SetClickedSchedulerIndex id ->
+            ( { model | clickedSchedulerIndex = id }, Cmd.none )
         ChangeCurrentBoardIitle title ->
             let
                 oldDashboard = model.dashboard
@@ -160,7 +204,7 @@ update msg model =
                 filteredSchedulerList = List.filter (\ scheduler -> scheduler.id /= oldBoard.activeSchedulerIndex) oldBoard.schedulers
                 updatedSchedulers = List.sortBy .stable_id (newScheduler :: filteredSchedulerList)
                 newBoard = { oldBoard | schedulers = updatedSchedulers }
-                filteredBoardList = List.filter (\ board -> board.id == model.selectedBoardIndex) model.dashboard.boards
+                filteredBoardList = List.filter (\ board -> board.id /= model.selectedBoardIndex) model.dashboard.boards
                 updatedBoards = newBoard :: filteredBoardList
                 oldDashboard = model.dashboard
                 newDashboard = { oldDashboard | boards = updatedBoards }
@@ -180,6 +224,14 @@ update msg model =
                 ( { model | dashboard = newDashboard }, Cmd.none )
 
 
+
+checkTask : Maybe Task -> Task
+checkTask a =
+    case a of
+        Nothing ->
+            Task "" False 0
+        Just a ->
+            Task a.title a.completed a.id
 
 checkScheduler : Maybe Scheduler -> Scheduler
 checkScheduler a =
@@ -239,19 +291,19 @@ boardDetailsView board =
 
 schedulerView : Scheduler -> Html Msg
 schedulerView scheduler =
-    li []
+    li [ onMouseDown (SetClickedSchedulerIndex scheduler.id) ]
         [ h4 [] [ text scheduler.title ]
         , input [ onClick (ChangeCurrentSchedulerIndex scheduler.id)
         , onInput ChangeCurrentTaskTitle, placeholder "Title for new task!"
         , value scheduler.pendingTaskTitle ] []
         , button [ onClick AddTask ] [ text "Add Task" ]
-        , ul [] ( List.map taskView scheduler.tasks )
+        , ul ( DragDrop.droppable DragDropMsg scheduler.id ) ( List.map taskView scheduler.tasks )
         ]
 
 
 taskView : Task -> Html Msg
 taskView task =
-    li []
+    li ( DragDrop.draggable DragDropMsg task.id )
         [ text task.title
         , input [ type_ "checkbox", checked task.completed ] []
         ]

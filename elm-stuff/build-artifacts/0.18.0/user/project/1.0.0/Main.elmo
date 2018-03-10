@@ -1,42 +1,26 @@
 var _user$project$Main$subscriptions = function (model) {
 	return _elm_lang$core$Platform_Sub$none;
 };
-var _user$project$Main$taskView = function (task) {
-	return A2(
-		_elm_lang$html$Html$li,
-		{ctor: '[]'},
-		{
-			ctor: '::',
-			_0: _elm_lang$html$Html$text(task.title),
-			_1: {
-				ctor: '::',
-				_0: A2(
-					_elm_lang$html$Html$input,
-					{
-						ctor: '::',
-						_0: _elm_lang$html$Html_Attributes$type_('checkbox'),
-						_1: {
-							ctor: '::',
-							_0: _elm_lang$html$Html_Attributes$checked(task.completed),
-							_1: {ctor: '[]'}
-						}
-					},
-					{ctor: '[]'}),
-				_1: {ctor: '[]'}
-			}
-		});
-};
 var _user$project$Main$Task = F3(
 	function (a, b, c) {
 		return {title: a, completed: b, id: c};
 	});
+var _user$project$Main$checkTask = function (a) {
+	var _p0 = a;
+	if (_p0.ctor === 'Nothing') {
+		return A3(_user$project$Main$Task, '', false, 0);
+	} else {
+		var _p1 = _p0._0;
+		return A3(_user$project$Main$Task, _p1.title, _p1.completed, _p1.id);
+	}
+};
 var _user$project$Main$Scheduler = F6(
 	function (a, b, c, d, e, f) {
 		return {title: a, currentTask: b, tasks: c, id: d, pendingTaskTitle: e, stable_id: f};
 	});
 var _user$project$Main$checkScheduler = function (a) {
-	var _p0 = a;
-	if (_p0.ctor === 'Nothing') {
+	var _p2 = a;
+	if (_p2.ctor === 'Nothing') {
 		return A6(
 			_user$project$Main$Scheduler,
 			'',
@@ -46,8 +30,8 @@ var _user$project$Main$checkScheduler = function (a) {
 			'',
 			0);
 	} else {
-		var _p1 = _p0._0;
-		return A6(_user$project$Main$Scheduler, _p1.title, _p1.currentTask, _p1.tasks, _p1.id, _p1.pendingTaskTitle, _p1.stable_id);
+		var _p3 = _p2._0;
+		return A6(_user$project$Main$Scheduler, _p3.title, _p3.currentTask, _p3.tasks, _p3.id, _p3.pendingTaskTitle, _p3.stable_id);
 	}
 };
 var _user$project$Main$Board = F5(
@@ -55,8 +39,8 @@ var _user$project$Main$Board = F5(
 		return {title: a, schedulers: b, id: c, pendingSchedulerTitle: d, activeSchedulerIndex: e};
 	});
 var _user$project$Main$checkBoard = function (a) {
-	var _p2 = a;
-	if (_p2.ctor === 'Nothing') {
+	var _p4 = a;
+	if (_p4.ctor === 'Nothing') {
 		return A5(
 			_user$project$Main$Board,
 			'',
@@ -65,19 +49,129 @@ var _user$project$Main$checkBoard = function (a) {
 			'',
 			0);
 	} else {
-		var _p3 = _p2._0;
-		return A5(_user$project$Main$Board, _p3.title, _p3.schedulers, _p3.id, _p3.pendingSchedulerTitle, _p3.activeSchedulerIndex);
+		var _p5 = _p4._0;
+		return A5(_user$project$Main$Board, _p5.title, _p5.schedulers, _p5.id, _p5.pendingSchedulerTitle, _p5.activeSchedulerIndex);
 	}
 };
 var _user$project$Main$update = F2(
 	function (msg, model) {
-		var _p4 = msg;
-		switch (_p4.ctor) {
+		var _p6 = msg;
+		switch (_p6.ctor) {
+			case 'DragDropMsg':
+				var _p7 = A2(_norpan$elm_html5_drag_drop$Html5_DragDrop$update, _p6._0, model.dragDrop);
+				var model_ = _p7._0;
+				var result = _p7._1;
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{
+							dragDrop: model_,
+							dashboard: function () {
+								var _p8 = result;
+								if (_p8.ctor === 'Nothing') {
+									return model.dashboard;
+								} else {
+									var _p10 = _p8._0._0;
+									var _p9 = _p8._0._1;
+									var oldDashboard = model.dashboard;
+									var fromSchedulerIndex = model.clickedSchedulerIndex;
+									var activeBoardIndex = model.selectedBoardIndex;
+									var oldBoardA = _elm_lang$core$List$head(
+										A2(
+											_elm_lang$core$List$filter,
+											function (board) {
+												return _elm_lang$core$Native_Utils.eq(board.id, activeBoardIndex);
+											},
+											model.dashboard.boards));
+									var oldBoard = _user$project$Main$checkBoard(oldBoardA);
+									var fromSchedulerOldA = _elm_lang$core$List$head(
+										A2(
+											_elm_lang$core$List$filter,
+											function (scheduler) {
+												return _elm_lang$core$Native_Utils.eq(scheduler.id, fromSchedulerIndex);
+											},
+											oldBoard.schedulers));
+									var fromSchedulerOld = _user$project$Main$checkScheduler(fromSchedulerOldA);
+									var filteredTasks = A2(
+										_elm_lang$core$List$filter,
+										function (task) {
+											return !_elm_lang$core$Native_Utils.eq(task.id, _p10);
+										},
+										fromSchedulerOld.tasks);
+									var draggedTaskA = _elm_lang$core$List$head(
+										A2(
+											_elm_lang$core$List$filter,
+											function (task) {
+												return _elm_lang$core$Native_Utils.eq(task.id, _p10);
+											},
+											fromSchedulerOld.tasks));
+									var draggedTask = _user$project$Main$checkTask(draggedTaskA);
+									var fromSchedulerNew = _elm_lang$core$Native_Utils.update(
+										fromSchedulerOld,
+										{tasks: filteredTasks});
+									var toSchedulerOldA = _elm_lang$core$List$head(
+										A2(
+											_elm_lang$core$List$filter,
+											function (scheduler) {
+												return _elm_lang$core$Native_Utils.eq(scheduler.id, _p9);
+											},
+											oldBoard.schedulers));
+									var toSchedulerOld = _user$project$Main$checkScheduler(toSchedulerOldA);
+									var toSchedulerNew = _elm_lang$core$Native_Utils.update(
+										toSchedulerOld,
+										{
+											tasks: {ctor: '::', _0: draggedTask, _1: toSchedulerOld.tasks}
+										});
+									var filteredSchedulers = A2(
+										_elm_lang$core$List$filter,
+										function (scheduler) {
+											return (!_elm_lang$core$Native_Utils.eq(scheduler.id, fromSchedulerIndex)) && (!_elm_lang$core$Native_Utils.eq(scheduler.id, _p9));
+										},
+										oldBoard.schedulers);
+									var newBoard = _elm_lang$core$Native_Utils.update(
+										oldBoard,
+										{
+											schedulers: A2(
+												_elm_lang$core$List$sortBy,
+												function (_) {
+													return _.stable_id;
+												},
+												{
+													ctor: '::',
+													_0: fromSchedulerNew,
+													_1: {ctor: '::', _0: toSchedulerNew, _1: filteredSchedulers}
+												})
+										});
+									var filteredBoards = A2(
+										_elm_lang$core$List$filter,
+										function (board) {
+											return !_elm_lang$core$Native_Utils.eq(board.id, activeBoardIndex);
+										},
+										model.dashboard.boards);
+									var updatedBoards = {ctor: '::', _0: newBoard, _1: filteredBoards};
+									var newDashboard = _elm_lang$core$Native_Utils.update(
+										oldDashboard,
+										{boards: updatedBoards});
+									return newDashboard;
+								}
+							}()
+						}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'SetClickedSchedulerIndex':
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{clickedSchedulerIndex: _p6._0}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
 			case 'ChangeCurrentBoardIitle':
 				var oldDashboard = model.dashboard;
 				var newDashboard = _elm_lang$core$Native_Utils.update(
 					oldDashboard,
-					{currentBoardTitle: _p4._0});
+					{currentBoardTitle: _p6._0});
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
@@ -116,7 +210,7 @@ var _user$project$Main$update = F2(
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
-						{selectedBoardIndex: _p4._0, forwardToDetails: true}),
+						{selectedBoardIndex: _p6._0, forwardToDetails: true}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 			case 'ChangeCurrentSchedulerTitle':
@@ -132,7 +226,7 @@ var _user$project$Main$update = F2(
 				var oldBoard = _user$project$Main$checkBoard(oldBoardA);
 				var updatedBoard = _elm_lang$core$Native_Utils.update(
 					oldBoard,
-					{pendingSchedulerTitle: _p4._0});
+					{pendingSchedulerTitle: _p6._0});
 				var filteredBoards = A2(
 					_elm_lang$core$List$filter,
 					function (board) {
@@ -235,7 +329,7 @@ var _user$project$Main$update = F2(
 				var oldScheduler = _user$project$Main$checkScheduler(schedulerA);
 				var newScheduler = _elm_lang$core$Native_Utils.update(
 					oldScheduler,
-					{pendingTaskTitle: _p4._0});
+					{pendingTaskTitle: _p6._0});
 				var filteredSchedulers = A2(
 					_elm_lang$core$List$filter,
 					function (scheduler) {
@@ -269,7 +363,7 @@ var _user$project$Main$update = F2(
 				var filteredBoardList = A2(
 					_elm_lang$core$List$filter,
 					function (board) {
-						return _elm_lang$core$Native_Utils.eq(board.id, model.selectedBoardIndex);
+						return !_elm_lang$core$Native_Utils.eq(board.id, model.selectedBoardIndex);
 					},
 					model.dashboard.boards);
 				var boardA = _elm_lang$core$List$head(
@@ -342,7 +436,7 @@ var _user$project$Main$update = F2(
 				var oldBoard = _user$project$Main$checkBoard(boardA);
 				var newBoard = _elm_lang$core$Native_Utils.update(
 					oldBoard,
-					{activeSchedulerIndex: _p4._0});
+					{activeSchedulerIndex: _p6._0});
 				var updatedBoardList = {ctor: '::', _0: newBoard, _1: boardList};
 				var newDashboard = _elm_lang$core$Native_Utils.update(
 					oldDashboard,
@@ -360,11 +454,11 @@ var _user$project$Main$Dashboard = F4(
 	function (a, b, c, d) {
 		return {currentBoardTitle: a, boards: b, currentSchedulerTitle: c, activeBoardIndex: d};
 	});
-var _user$project$Main$Model = F4(
-	function (a, b, c, d) {
-		return {dashboard: a, currentIndex: b, forwardToDetails: c, selectedBoardIndex: d};
+var _user$project$Main$Model = F6(
+	function (a, b, c, d, e, f) {
+		return {dashboard: a, currentIndex: b, forwardToDetails: c, selectedBoardIndex: d, dragDrop: e, clickedSchedulerIndex: f};
 	});
-var _user$project$Main$initialModel = A4(
+var _user$project$Main$initialModel = A6(
 	_user$project$Main$Model,
 	A4(
 		_user$project$Main$Dashboard,
@@ -374,8 +468,41 @@ var _user$project$Main$initialModel = A4(
 		0),
 	0,
 	false,
-	0);
+	0,
+	_norpan$elm_html5_drag_drop$Html5_DragDrop$init,
+	-1);
 var _user$project$Main$init = {ctor: '_Tuple2', _0: _user$project$Main$initialModel, _1: _elm_lang$core$Platform_Cmd$none};
+var _user$project$Main$SetClickedSchedulerIndex = function (a) {
+	return {ctor: 'SetClickedSchedulerIndex', _0: a};
+};
+var _user$project$Main$DragDropMsg = function (a) {
+	return {ctor: 'DragDropMsg', _0: a};
+};
+var _user$project$Main$taskView = function (task) {
+	return A2(
+		_elm_lang$html$Html$li,
+		A2(_norpan$elm_html5_drag_drop$Html5_DragDrop$draggable, _user$project$Main$DragDropMsg, task.id),
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html$text(task.title),
+			_1: {
+				ctor: '::',
+				_0: A2(
+					_elm_lang$html$Html$input,
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html_Attributes$type_('checkbox'),
+						_1: {
+							ctor: '::',
+							_0: _elm_lang$html$Html_Attributes$checked(task.completed),
+							_1: {ctor: '[]'}
+						}
+					},
+					{ctor: '[]'}),
+				_1: {ctor: '[]'}
+			}
+		});
+};
 var _user$project$Main$ChangeCurrentSchedulerIndex = function (a) {
 	return {ctor: 'ChangeCurrentSchedulerIndex', _0: a};
 };
@@ -386,7 +513,12 @@ var _user$project$Main$ChangeCurrentTaskTitle = function (a) {
 var _user$project$Main$schedulerView = function (scheduler) {
 	return A2(
 		_elm_lang$html$Html$li,
-		{ctor: '[]'},
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html_Events$onMouseDown(
+				_user$project$Main$SetClickedSchedulerIndex(scheduler.id)),
+			_1: {ctor: '[]'}
+		},
 		{
 			ctor: '::',
 			_0: A2(
@@ -438,7 +570,7 @@ var _user$project$Main$schedulerView = function (scheduler) {
 						ctor: '::',
 						_0: A2(
 							_elm_lang$html$Html$ul,
-							{ctor: '[]'},
+							A2(_norpan$elm_html5_drag_drop$Html5_DragDrop$droppable, _user$project$Main$DragDropMsg, scheduler.id),
 							A2(_elm_lang$core$List$map, _user$project$Main$taskView, scheduler.tasks)),
 						_1: {ctor: '[]'}
 					}
@@ -555,8 +687,8 @@ var _user$project$Main$detailsView = function (model) {
 		},
 		model.dashboard.boards);
 	var board = _elm_lang$core$List$head(boardList);
-	var _p5 = board;
-	if (_p5.ctor === 'Nothing') {
+	var _p11 = board;
+	if (_p11.ctor === 'Nothing') {
 		return A2(
 			_elm_lang$html$Html$div,
 			{ctor: '[]'},
@@ -566,9 +698,9 @@ var _user$project$Main$detailsView = function (model) {
 				_1: {ctor: '[]'}
 			});
 	} else {
-		var _p6 = _p5._0;
+		var _p12 = _p11._0;
 		return _user$project$Main$boardDetailsView(
-			A5(_user$project$Main$Board, _p6.title, _p6.schedulers, _p6.id, _p6.pendingSchedulerTitle, _p6.activeSchedulerIndex));
+			A5(_user$project$Main$Board, _p12.title, _p12.schedulers, _p12.id, _p12.pendingSchedulerTitle, _p12.activeSchedulerIndex));
 	}
 };
 var _user$project$Main$SwitchToBoard = function (a) {
