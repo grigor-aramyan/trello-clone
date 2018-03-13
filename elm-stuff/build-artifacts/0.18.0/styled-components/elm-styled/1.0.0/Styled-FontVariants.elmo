@@ -1,0 +1,86 @@
+var _styled_components$elm_styled$Styled_FontVariants$stackedFractions = {value: 'stacked-fractions', fontVariantNumeric: _styled_components$elm_styled$Styled_Types$Compatible};
+var _styled_components$elm_styled$Styled_FontVariants$diagonalFractions = {value: 'diagonal-fractions', fontVariantNumeric: _styled_components$elm_styled$Styled_Types$Compatible};
+var _styled_components$elm_styled$Styled_FontVariants$tabularNums = {value: 'tabular-nums', fontVariantNumeric: _styled_components$elm_styled$Styled_Types$Compatible};
+var _styled_components$elm_styled$Styled_FontVariants$proportionalNums = {value: 'proportional-nums', fontVariantNumeric: _styled_components$elm_styled$Styled_Types$Compatible};
+var _styled_components$elm_styled$Styled_FontVariants$oldstyleNums = {value: 'oldstyle-nums', fontVariantNumeric: _styled_components$elm_styled$Styled_Types$Compatible};
+var _styled_components$elm_styled$Styled_FontVariants$liningNums = {value: 'lining-nums', fontVariantNumeric: _styled_components$elm_styled$Styled_Types$Compatible};
+var _styled_components$elm_styled$Styled_FontVariants$slashedZero = {value: 'slashed-zero', fontVariantNumeric: _styled_components$elm_styled$Styled_Types$Compatible};
+var _styled_components$elm_styled$Styled_FontVariants$ordinal = {value: 'ordinal', fontVariantNumeric: _styled_components$elm_styled$Styled_Types$Compatible};
+var _styled_components$elm_styled$Styled_FontVariants$noContextual = {value: 'no-contextual', fontVariantLigatures: _styled_components$elm_styled$Styled_Types$Compatible};
+var _styled_components$elm_styled$Styled_FontVariants$contextual = {value: 'contextual', fontVariantLigatures: _styled_components$elm_styled$Styled_Types$Compatible};
+var _styled_components$elm_styled$Styled_FontVariants$noHistoricalLigatures = {value: 'no-historical-ligatures', fontVariantLigatures: _styled_components$elm_styled$Styled_Types$Compatible};
+var _styled_components$elm_styled$Styled_FontVariants$historicalLigatures = {value: 'historical-ligatures', fontVariantLigatures: _styled_components$elm_styled$Styled_Types$Compatible};
+var _styled_components$elm_styled$Styled_FontVariants$noDiscretionaryLigatures = {value: 'no-discretionary-ligatures', fontVariantLigatures: _styled_components$elm_styled$Styled_Types$Compatible};
+var _styled_components$elm_styled$Styled_FontVariants$discretionaryLigatures = {value: 'discretionary-ligatures', fontVariantLigatures: _styled_components$elm_styled$Styled_Types$Compatible};
+var _styled_components$elm_styled$Styled_FontVariants$noCommonLigatures = {value: 'no-common-ligatures', fontVariantLigatures: _styled_components$elm_styled$Styled_Types$Compatible};
+var _styled_components$elm_styled$Styled_FontVariants$commonLigatures = {value: 'common-ligatures', fontVariantLigatures: _styled_components$elm_styled$Styled_Types$Compatible};
+var _styled_components$elm_styled$Styled_FontVariants$fullWidth = {value: 'full-width', fontVariantEastAsian: _styled_components$elm_styled$Styled_Types$Compatible};
+var _styled_components$elm_styled$Styled_FontVariants$proportionalWidth = {value: 'proportional-width', fontVariantEastAsian: _styled_components$elm_styled$Styled_Types$Compatible};
+var _styled_components$elm_styled$Styled_FontVariants$traditional = {value: 'traditional', fontVariantEastAsian: _styled_components$elm_styled$Styled_Types$Compatible};
+var _styled_components$elm_styled$Styled_FontVariants$simplified = {value: 'simplified', fontVariantEastAsian: _styled_components$elm_styled$Styled_Types$Compatible};
+var _styled_components$elm_styled$Styled_FontVariants$jis04 = {value: 'jis04', fontVariantEastAsian: _styled_components$elm_styled$Styled_Types$Compatible};
+var _styled_components$elm_styled$Styled_FontVariants$jis90 = {value: 'jis90', fontVariantEastAsian: _styled_components$elm_styled$Styled_Types$Compatible};
+var _styled_components$elm_styled$Styled_FontVariants$jis83 = {value: 'jis83', fontVariantEastAsian: _styled_components$elm_styled$Styled_Types$Compatible};
+var _styled_components$elm_styled$Styled_FontVariants$jis78 = {value: 'jis78', fontVariantEastAsian: _styled_components$elm_styled$Styled_Types$Compatible};
+var _styled_components$elm_styled$Styled_FontVariants$ruby = {value: 'ruby', fontVariantEastAsian: _styled_components$elm_styled$Styled_Types$Compatible};
+var _styled_components$elm_styled$Styled_FontVariants$titlingCaps = {value: 'titling-caps', fontVariantCaps: _styled_components$elm_styled$Styled_Types$Compatible};
+var _styled_components$elm_styled$Styled_FontVariants$unicase = {value: 'unicase', fontVariantCaps: _styled_components$elm_styled$Styled_Types$Compatible};
+var _styled_components$elm_styled$Styled_FontVariants$allPetiteCaps = {value: 'all-petite-caps', fontVariantCaps: _styled_components$elm_styled$Styled_Types$Compatible};
+var _styled_components$elm_styled$Styled_FontVariants$petiteCaps = {value: 'petite-caps', fontVariantCaps: _styled_components$elm_styled$Styled_Types$Compatible};
+var _styled_components$elm_styled$Styled_FontVariants$allSmallCaps = {value: 'all-small-caps', fontVariantCaps: _styled_components$elm_styled$Styled_Types$Compatible};
+var _styled_components$elm_styled$Styled_FontVariants$smallCaps = {value: 'small-caps', fontVariantCaps: _styled_components$elm_styled$Styled_Types$Compatible};
+var _styled_components$elm_styled$Styled_FontVariants$annotation = function (name) {
+	return {
+		value: A2(
+			_elm_lang$core$Basics_ops['++'],
+			'annotation(',
+			A2(_elm_lang$core$Basics_ops['++'], name, ')')),
+		fontVariantAlternates: _styled_components$elm_styled$Styled_Types$Compatible
+	};
+};
+var _styled_components$elm_styled$Styled_FontVariants$ornaments = function (name) {
+	return {
+		value: A2(
+			_elm_lang$core$Basics_ops['++'],
+			'ornaments(',
+			A2(_elm_lang$core$Basics_ops['++'], name, ')')),
+		fontVariantAlternates: _styled_components$elm_styled$Styled_Types$Compatible
+	};
+};
+var _styled_components$elm_styled$Styled_FontVariants$swash = function (name) {
+	return {
+		value: A2(
+			_elm_lang$core$Basics_ops['++'],
+			'swash(',
+			A2(_elm_lang$core$Basics_ops['++'], name, ')')),
+		fontVariantAlternates: _styled_components$elm_styled$Styled_Types$Compatible
+	};
+};
+var _styled_components$elm_styled$Styled_FontVariants$characterVariant = function (name) {
+	return {
+		value: A2(
+			_elm_lang$core$Basics_ops['++'],
+			'character-variant(',
+			A2(_elm_lang$core$Basics_ops['++'], name, ')')),
+		fontVariantAlternates: _styled_components$elm_styled$Styled_Types$Compatible
+	};
+};
+var _styled_components$elm_styled$Styled_FontVariants$styleset = function (name) {
+	return {
+		value: A2(
+			_elm_lang$core$Basics_ops['++'],
+			'styleset(',
+			A2(_elm_lang$core$Basics_ops['++'], name, ')')),
+		fontVariantAlternates: _styled_components$elm_styled$Styled_Types$Compatible
+	};
+};
+var _styled_components$elm_styled$Styled_FontVariants$stylistic = function (name) {
+	return {
+		value: A2(
+			_elm_lang$core$Basics_ops['++'],
+			'stylistic(',
+			A2(_elm_lang$core$Basics_ops['++'], name, ')')),
+		fontVariantAlternates: _styled_components$elm_styled$Styled_Types$Compatible
+	};
+};
+var _styled_components$elm_styled$Styled_FontVariants$historicalForms = {value: 'historical-forms', fontVariantAlternates: _styled_components$elm_styled$Styled_Types$Compatible};

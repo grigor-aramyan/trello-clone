@@ -4,7 +4,7 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onClick, onInput, onMouseDown)
 import Html5.DragDrop as DragDrop
-
+import Styled exposing (..)
 
 main : Program Never Model Msg
 main =
@@ -85,11 +85,33 @@ type Msg =
     | ChangeCurrentSchedulerIndex Int
     | DragDropMsg (DragDrop.Msg Int Int)
     | SetClickedSchedulerIndex Int
+    | CheckTask Int
 
 
 update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
     case msg of
+        CheckTask taskId ->
+            let
+                activeBoardIndex = model.selectedBoardIndex
+                oldBoardA = List.head (List.filter (\ board -> board.id == activeBoardIndex ) model.dashboard.boards )
+                oldBoard = checkBoard oldBoardA
+                schedulerIndex = model.clickedSchedulerIndex
+                schedulerA = List.head (List.filter (\ scheduler -> scheduler.id == schedulerIndex ) oldBoard.schedulers )
+                schedulerOld = checkScheduler schedulerA
+                taskOldA = List.head (List.filter (\task -> task.id == taskId ) schedulerOld.tasks )
+                taskOld = checkTask taskOldA
+                taskNew = { taskOld | completed = not taskOld.completed }
+                filteredTasks = List.filter (\task -> task.id /= taskId ) schedulerOld.tasks
+                schedulerNew = { schedulerOld | tasks = List.sortBy .id ( taskNew :: filteredTasks ) }
+                filteredSchedulers = List.filter (\ scheduler -> scheduler.id /= schedulerIndex ) oldBoard.schedulers
+                newBoard = { oldBoard | schedulers = List.sortBy .stable_id (schedulerNew :: filteredSchedulers) }
+                filteredBoards = List.filter ( \ board -> board.id /= activeBoardIndex ) model.dashboard.boards
+                updatedBoards = newBoard :: filteredBoards
+                oldDashboard = model.dashboard
+                newDashboard = { oldDashboard | boards = updatedBoards }
+            in
+                ( { model | dashboard = newDashboard }, Cmd.none )
         DragDropMsg msg_ ->
             let
                 ( model_, result ) =
@@ -116,7 +138,7 @@ update msg model =
                                     fromSchedulerNew = { fromSchedulerOld | tasks = filteredTasks }
                                     toSchedulerOldA = List.head (List.filter (\ scheduler -> scheduler.id == newSchedulerId ) oldBoard.schedulers )
                                     toSchedulerOld = checkScheduler toSchedulerOldA
-                                    toSchedulerNew = { toSchedulerOld | tasks = draggedTask :: toSchedulerOld.tasks }
+                                    toSchedulerNew = { toSchedulerOld | tasks = List.sortBy .id (draggedTask :: toSchedulerOld.tasks) }
                                     filteredSchedulers = List.filter (\ scheduler -> scheduler.id /= fromSchedulerIndex && scheduler.id /= newSchedulerId ) oldBoard.schedulers
                                     newBoard = { oldBoard | schedulers = List.sortBy .stable_id (fromSchedulerNew :: toSchedulerNew :: filteredSchedulers) }
                                     filteredBoards = List.filter ( \ board -> board.id /= activeBoardIndex ) model.dashboard.boards
@@ -198,7 +220,7 @@ update msg model =
                 schedulerA = List.head (List.filter (\ scheduler -> scheduler.id == oldBoard.activeSchedulerIndex) oldBoard.schedulers)
                 oldScheduler = checkScheduler schedulerA
                 newScheduler = { oldScheduler |
-                    tasks = ( Task oldScheduler.pendingTaskTitle False model.currentIndex ) :: oldScheduler.tasks
+                    tasks = List.sortBy .id ( ( Task oldScheduler.pendingTaskTitle False model.currentIndex ) :: oldScheduler.tasks )
                     , pendingTaskTitle = ""
                     }
                 filteredSchedulerList = List.filter (\ scheduler -> scheduler.id /= oldBoard.activeSchedulerIndex) oldBoard.schedulers
@@ -301,11 +323,15 @@ schedulerView scheduler =
         ]
 
 
+styledSpan =
+    styled span
+        [ textDecorationLine lineThrough ]
+
 taskView : Task -> Html Msg
 taskView task =
     li ( DragDrop.draggable DragDropMsg task.id )
-        [ text task.title
-        , input [ type_ "checkbox", checked task.completed ] []
+        [ ( if ( task.completed ) then styledSpan [] [ text task.title ] else span [] [ text task.title ] )
+        , input [ type_ "checkbox", checked task.completed, onClick (CheckTask task.id) ] []
         ]
 
 

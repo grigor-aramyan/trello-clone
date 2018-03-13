@@ -1,0 +1,138 @@
+var _styled_components$elm_styled$Styled_Gradients_ops = _styled_components$elm_styled$Styled_Gradients_ops || {};
+_styled_components$elm_styled$Styled_Gradients_ops['@'] = F2(
+	function (shape, _p0) {
+		var _p1 = _p0;
+		return {
+			value: A2(
+				_elm_lang$core$Basics_ops['++'],
+				shape.value,
+				A2(
+					_elm_lang$core$Basics_ops['++'],
+					' at ',
+					A2(
+						_elm_lang$core$Basics_ops['++'],
+						_p1._0.value,
+						A2(_elm_lang$core$Basics_ops['++'], ' ', _p1._1.value)))),
+			shape: _styled_components$elm_styled$Styled_Types$Compatible
+		};
+	});
+var _styled_components$elm_styled$Styled_Gradients$farthestCorner = function (shape) {
+	return {
+		value: A2(_elm_lang$core$Basics_ops['++'], shape.value, ' farthest-corner'),
+		shape: _styled_components$elm_styled$Styled_Types$Compatible
+	};
+};
+var _styled_components$elm_styled$Styled_Gradients$farthestSide = function (shape) {
+	return {
+		value: A2(_elm_lang$core$Basics_ops['++'], shape.value, ' farthest-side'),
+		shape: _styled_components$elm_styled$Styled_Types$Compatible
+	};
+};
+var _styled_components$elm_styled$Styled_Gradients$closestCorner = function (shape) {
+	return {
+		value: A2(_elm_lang$core$Basics_ops['++'], shape.value, ' closest-corner'),
+		shape: _styled_components$elm_styled$Styled_Types$Compatible
+	};
+};
+var _styled_components$elm_styled$Styled_Gradients$closestSide = function (shape) {
+	return {
+		value: A2(_elm_lang$core$Basics_ops['++'], shape.value, ' closest-side'),
+		shape: _styled_components$elm_styled$Styled_Types$Compatible
+	};
+};
+var _styled_components$elm_styled$Styled_Gradients$ellipse = F2(
+	function (width, height) {
+		return {
+			value: A2(
+				_elm_lang$core$Basics_ops['++'],
+				'ellipse ',
+				A2(
+					_elm_lang$core$Basics_ops['++'],
+					width.value,
+					A2(_elm_lang$core$Basics_ops['++'], ' ', height.value))),
+			shape: _styled_components$elm_styled$Styled_Types$Compatible
+		};
+	});
+var _styled_components$elm_styled$Styled_Gradients$plainEllipse = {value: 'ellipse', shape: _styled_components$elm_styled$Styled_Types$Compatible};
+var _styled_components$elm_styled$Styled_Gradients$circle = function (radius) {
+	return {
+		value: A2(_elm_lang$core$Basics_ops['++'], 'circle ', radius.value),
+		shape: _styled_components$elm_styled$Styled_Types$Compatible
+	};
+};
+var _styled_components$elm_styled$Styled_Gradients$plainCircle = {value: 'circle', shape: _styled_components$elm_styled$Styled_Types$Compatible};
+var _styled_components$elm_styled$Styled_Gradients$radialGradient = F2(
+	function (shape, colorStops) {
+		var stops = A2(
+			_elm_lang$core$String$join,
+			', ',
+			A2(
+				_elm_lang$core$List$map,
+				function (_) {
+					return _.value;
+				},
+				colorStops));
+		var value = A2(
+			_elm_lang$core$Basics_ops['++'],
+			'radial-gradient(',
+			A2(
+				_elm_lang$core$Basics_ops['++'],
+				shape.value,
+				A2(
+					_elm_lang$core$Basics_ops['++'],
+					', ',
+					A2(_elm_lang$core$Basics_ops['++'], stops, ')'))));
+		return {value: value, gradient: _styled_components$elm_styled$Styled_Types$Compatible, image: _styled_components$elm_styled$Styled_Types$Compatible};
+	});
+var _styled_components$elm_styled$Styled_Gradients$repeatingRadialGradient = F2(
+	function (shape, colorStops) {
+		var gradient = A2(_styled_components$elm_styled$Styled_Gradients$radialGradient, shape, colorStops);
+		var value = A2(_elm_lang$core$Basics_ops['++'], 'repeating-', gradient.value);
+		return _elm_lang$core$Native_Utils.update(
+			gradient,
+			{value: value});
+	});
+var _styled_components$elm_styled$Styled_Gradients$linearGradient = F2(
+	function (angle, colorStops) {
+		var stops = A2(
+			_elm_lang$core$String$join,
+			', ',
+			A2(
+				_elm_lang$core$List$map,
+				function (_) {
+					return _.value;
+				},
+				colorStops));
+		var value = A2(
+			_elm_lang$core$Basics_ops['++'],
+			'linear-gradient(',
+			A2(
+				_elm_lang$core$Basics_ops['++'],
+				angle.value,
+				A2(
+					_elm_lang$core$Basics_ops['++'],
+					', ',
+					A2(_elm_lang$core$Basics_ops['++'], stops, ')'))));
+		return {value: value, gradient: _styled_components$elm_styled$Styled_Types$Compatible, image: _styled_components$elm_styled$Styled_Types$Compatible};
+	});
+var _styled_components$elm_styled$Styled_Gradients$repeatingLinearGradient = F2(
+	function (angle, colorStops) {
+		var gradient = A2(_styled_components$elm_styled$Styled_Gradients$linearGradient, angle, colorStops);
+		var value = A2(_elm_lang$core$Basics_ops['++'], 'repeating-', gradient.value);
+		return _elm_lang$core$Native_Utils.update(
+			gradient,
+			{value: value});
+	});
+var _styled_components$elm_styled$Styled_Gradients$stop2 = F2(
+	function (color, position) {
+		return {
+			value: A2(
+				_elm_lang$core$Basics_ops['++'],
+				color.value,
+				A2(_elm_lang$core$Basics_ops['++'], ' ', position.value)),
+			colorStop: _styled_components$elm_styled$Styled_Types$Compatible
+		};
+	});
+var _styled_components$elm_styled$Styled_Gradients$stop = function (color) {
+	return {value: color.value, colorStop: _styled_components$elm_styled$Styled_Types$Compatible};
+};
