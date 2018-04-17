@@ -195,8 +195,11 @@ update msg model =
                 oldDashboard = model.dashboard
                 newDashboard = { oldDashboard | boards = updatedBoards }
             in
-                ( { model | dashboard = newDashboard
-                    , currentIndex = model.currentIndex + 1 }, Cmd.none )
+                if String.isEmpty title then
+                    ( model, Cmd.none )
+                else
+                    ( { model | dashboard = newDashboard
+                        , currentIndex = model.currentIndex + 1 }, Cmd.none )
         ActionBack ->
             ( { model | forwardToDetails = False }, Cmd.none )
         ChangeCurrentTaskTitle title ->
