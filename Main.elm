@@ -4,7 +4,7 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onClick, onInput, onMouseDown)
 import Html5.DragDrop as DragDrop
-import Styled exposing (..)
+import Style exposing (..)
 
 main : Program Never Model Msg
 main =
@@ -124,7 +124,7 @@ update msg model =
                             Nothing ->
                                 model.dashboard
 
-                            Just ( taskId, newSchedulerId ) ->
+                            Just ( taskId, newSchedulerId, _) ->
                                 let
                                     activeBoardIndex = model.selectedBoardIndex
                                     oldBoardA = List.head (List.filter (\ board -> board.id == activeBoardIndex ) model.dashboard.boards )
@@ -322,15 +322,16 @@ schedulerView scheduler =
         , ul ( DragDrop.droppable DragDropMsg scheduler.id ) ( List.map taskView scheduler.tasks )
         ]
 
+-- STYLED COMPONENTS
 
-styledSpan =
-    styled span
-        [ textDecorationLine lineThrough ]
+checkedTaskStyle : List Style
+checkedTaskStyle =
+    [ textDecoration lineThrough ]
 
 taskView : Task -> Html Msg
 taskView task =
     li ( DragDrop.draggable DragDropMsg task.id )
-        [ ( if ( task.completed ) then styledSpan [] [ text task.title ] else span [] [ text task.title ] )
+        [ ( if ( task.completed ) then span [ style checkedTaskStyle ] [ text task.title ] else span [] [ text task.title ] )
         , input [ type_ "checkbox", checked task.completed, onClick (CheckTask task.id) ] []
         ]
 
