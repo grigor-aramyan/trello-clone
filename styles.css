@@ -1,0 +1,40 @@
+html {
+  height: 100%;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    min-height: 100%;
+}
+
+.myclass {
+
+}
+
+.boardDetails {
+    width: 100%;
+    background: red;
+}
+
+.horizontalSchedulers {
+      list-style: none;
+      margin: 0;
+
+      display: -webkit-box;
+      display: -moz-box;
+      display: -ms-flexbox;
+      display: -webkit-flex;
+      display: flex;
+
+      -webkit-flex-flow: row wrap;
+      justify-content: flex-end;
+}
+
+.horizontalSchedulers li {
+      text-decoration: none;
+      display: block;
+      padding: 1em;
+}

@@ -280,7 +280,7 @@ checkBoard a =
 
 view : Model -> Html Msg
 view model =
-    div []
+    div [ ]
         [ (if model.forwardToDetails then detailsView model
             else indexView model)
         ]
@@ -301,7 +301,7 @@ detailsView model =
 
 boardDetailsView : Board -> Html Msg
 boardDetailsView board =
-    div []
+    div [ class "boardDetails" ]
         [ h1[] [ text board.title ]
         , button [ onClick ActionBack, style [ ("float", "right") ] ] [ text "Back "]
         , br [] []
@@ -310,7 +310,7 @@ boardDetailsView board =
             , onInput ChangeCurrentSchedulerTitle ] []
         , button [ onClick AddScheduler ] [ text "Add Scheduler" ]
         , br [] []
-        , ul [] ( List.map schedulerView board.schedulers )
+        , ul [ class "horizontalSchedulers" ] ( List.map schedulerView board.schedulers )
         ]
 
 
@@ -342,7 +342,7 @@ taskView task =
 
 indexView : Model -> Html Msg
 indexView model =
-    div []
+    div [ class "myclass" ]
         [ input [ value model.dashboard.currentBoardTitle
             , onInput ChangeCurrentBoardIitle
             , placeholder "Enter board title"
