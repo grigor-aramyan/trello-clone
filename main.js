@@ -10226,7 +10226,11 @@ var _user$project$Main$schedulerView = function (scheduler) {
 						{
 							ctor: '::',
 							_0: _elm_lang$html$Html_Events$onClick(_user$project$Main$AddTask),
-							_1: {ctor: '[]'}
+							_1: {
+								ctor: '::',
+								_0: _elm_lang$html$Html_Attributes$class('addButton'),
+								_1: {ctor: '[]'}
+							}
 						},
 						{
 							ctor: '::',
@@ -10261,95 +10265,116 @@ var _user$project$Main$boardDetailsView = function (board) {
 		{
 			ctor: '::',
 			_0: A2(
-				_elm_lang$html$Html$h1,
-				{ctor: '[]'},
+				_elm_lang$html$Html$div,
 				{
 					ctor: '::',
-					_0: _elm_lang$html$Html$text(board.title),
+					_0: _elm_lang$html$Html_Attributes$class('centerBoardDetails'),
 					_1: {ctor: '[]'}
-				}),
-			_1: {
-				ctor: '::',
-				_0: A2(
-					_elm_lang$html$Html$button,
-					{
-						ctor: '::',
-						_0: _elm_lang$html$Html_Events$onClick(_user$project$Main$ActionBack),
-						_1: {
-							ctor: '::',
-							_0: _elm_lang$html$Html_Attributes$style(
-								{
-									ctor: '::',
-									_0: {ctor: '_Tuple2', _0: 'float', _1: 'right'},
-									_1: {ctor: '[]'}
-								}),
-							_1: {ctor: '[]'}
-						}
-					},
-					{
-						ctor: '::',
-						_0: _elm_lang$html$Html$text('Back '),
-						_1: {ctor: '[]'}
-					}),
-				_1: {
+				},
+				{
 					ctor: '::',
 					_0: A2(
-						_elm_lang$html$Html$br,
+						_elm_lang$html$Html$h1,
 						{ctor: '[]'},
-						{ctor: '[]'}),
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html$text(board.title),
+							_1: {ctor: '[]'}
+						}),
 					_1: {
 						ctor: '::',
 						_0: A2(
-							_elm_lang$html$Html$input,
+							_elm_lang$html$Html$button,
 							{
 								ctor: '::',
-								_0: _elm_lang$html$Html_Attributes$placeholder('Enter scheduler title'),
+								_0: _elm_lang$html$Html_Events$onClick(_user$project$Main$ActionBack),
 								_1: {
 									ctor: '::',
-									_0: _elm_lang$html$Html_Attributes$value(board.pendingSchedulerTitle),
-									_1: {
-										ctor: '::',
-										_0: _elm_lang$html$Html_Events$onInput(_user$project$Main$ChangeCurrentSchedulerTitle),
-										_1: {ctor: '[]'}
-									}
+									_0: _elm_lang$html$Html_Attributes$class('backButton'),
+									_1: {ctor: '[]'}
 								}
 							},
-							{ctor: '[]'}),
+							{
+								ctor: '::',
+								_0: A2(
+									_elm_lang$html$Html$i,
+									{
+										ctor: '::',
+										_0: _elm_lang$html$Html_Attributes$class('fa fa-arrow-left'),
+										_1: {ctor: '[]'}
+									},
+									{ctor: '[]'}),
+								_1: {
+									ctor: '::',
+									_0: _elm_lang$html$Html$text(' Back '),
+									_1: {ctor: '[]'}
+								}
+							}),
 						_1: {
 							ctor: '::',
 							_0: A2(
-								_elm_lang$html$Html$button,
-								{
-									ctor: '::',
-									_0: _elm_lang$html$Html_Events$onClick(_user$project$Main$AddScheduler),
-									_1: {ctor: '[]'}
-								},
-								{
-									ctor: '::',
-									_0: _elm_lang$html$Html$text('Add Scheduler'),
-									_1: {ctor: '[]'}
-								}),
+								_elm_lang$html$Html$br,
+								{ctor: '[]'},
+								{ctor: '[]'}),
 							_1: {
 								ctor: '::',
 								_0: A2(
-									_elm_lang$html$Html$br,
-									{ctor: '[]'},
+									_elm_lang$html$Html$input,
+									{
+										ctor: '::',
+										_0: _elm_lang$html$Html_Attributes$placeholder('Enter scheduler title'),
+										_1: {
+											ctor: '::',
+											_0: _elm_lang$html$Html_Attributes$value(board.pendingSchedulerTitle),
+											_1: {
+												ctor: '::',
+												_0: _elm_lang$html$Html_Events$onInput(_user$project$Main$ChangeCurrentSchedulerTitle),
+												_1: {ctor: '[]'}
+											}
+										}
+									},
 									{ctor: '[]'}),
 								_1: {
 									ctor: '::',
 									_0: A2(
-										_elm_lang$html$Html$ul,
+										_elm_lang$html$Html$button,
 										{
 											ctor: '::',
-											_0: _elm_lang$html$Html_Attributes$class('horizontalSchedulers'),
-											_1: {ctor: '[]'}
+											_0: _elm_lang$html$Html_Events$onClick(_user$project$Main$AddScheduler),
+											_1: {
+												ctor: '::',
+												_0: _elm_lang$html$Html_Attributes$class('addButton'),
+												_1: {ctor: '[]'}
+											}
 										},
-										A2(_elm_lang$core$List$map, _user$project$Main$schedulerView, board.schedulers)),
+										{
+											ctor: '::',
+											_0: _elm_lang$html$Html$text('Add Scheduler'),
+											_1: {ctor: '[]'}
+										}),
 									_1: {ctor: '[]'}
 								}
 							}
 						}
 					}
+				}),
+			_1: {
+				ctor: '::',
+				_0: A2(
+					_elm_lang$html$Html$br,
+					{ctor: '[]'},
+					{ctor: '[]'}),
+				_1: {
+					ctor: '::',
+					_0: A2(
+						_elm_lang$html$Html$ul,
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html_Attributes$class('horizontalSchedulers'),
+							_1: {ctor: '[]'}
+						},
+						A2(_elm_lang$core$List$map, _user$project$Main$schedulerView, board.schedulers)),
+					_1: {ctor: '[]'}
 				}
 			}
 		});
@@ -10440,7 +10465,11 @@ var _user$project$Main$indexView = function (model) {
 					{
 						ctor: '::',
 						_0: _elm_lang$html$Html_Events$onClick(_user$project$Main$AddBoard),
-						_1: {ctor: '[]'}
+						_1: {
+							ctor: '::',
+							_0: _elm_lang$html$Html_Attributes$class('addButton'),
+							_1: {ctor: '[]'}
+						}
 					},
 					{
 						ctor: '::',

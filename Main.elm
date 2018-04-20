@@ -302,13 +302,13 @@ detailsView model =
 boardDetailsView : Board -> Html Msg
 boardDetailsView board =
     div [ class "boardDetails" ]
-        [ h1[] [ text board.title ]
-        , button [ onClick ActionBack, style [ ("float", "right") ] ] [ text "Back "]
+        [ div[class "centerBoardDetails"][h1[] [ text board.title ]
+        , button [ onClick ActionBack, class "backButton" ] [ i [ class "fa fa-arrow-left" ] [], text " Back "]
         , br [] []
         , input [ placeholder "Enter scheduler title"
             , value board.pendingSchedulerTitle
             , onInput ChangeCurrentSchedulerTitle ] []
-        , button [ onClick AddScheduler ] [ text "Add Scheduler" ]
+        , button [ onClick AddScheduler, class "addButton" ] [ text "Add Scheduler" ]]
         , br [] []
         , ul [ class "horizontalSchedulers" ] ( List.map schedulerView board.schedulers )
         ]
@@ -321,7 +321,7 @@ schedulerView scheduler =
         , input [ onClick (ChangeCurrentSchedulerIndex scheduler.id)
         , onInput ChangeCurrentTaskTitle, placeholder "Title for new task!"
         , value scheduler.pendingTaskTitle ] []
-        , button [ onClick AddTask ] [ text "Add Task" ]
+        , button [ onClick AddTask, class "addButton" ] [ text "Add Task" ]
         , ul ( DragDrop.droppable DragDropMsg scheduler.id ) ( List.map taskView scheduler.tasks )
         ]
 
@@ -347,7 +347,7 @@ indexView model =
             , onInput ChangeCurrentBoardIitle
             , placeholder "Enter board title"
             ] []
-        , button [ onClick AddBoard ] [ text "Add board" ]
+        , button [ onClick AddBoard, class "addButton" ] [ text "Add board" ]
         , br [] []
         , ul [] ( List.map boardView model.dashboard.boards )
         ]

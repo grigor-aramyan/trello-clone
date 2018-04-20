@@ -15,8 +15,12 @@ body {
 }
 
 .boardDetails {
-    width: 100%;
-    background: red;
+    display: block;
+}
+
+.centerBoardDetails {
+    margin: auto;
+    width: 450px;
 }
 
 .horizontalSchedulers {
@@ -36,5 +40,24 @@ body {
 .horizontalSchedulers li {
       text-decoration: none;
       display: block;
-      padding: 1em;
+      padding: 0.5em;
+      margin: 0.2em;
+      background: yellow;
+}
+
+.horizontalSchedulers ul li {
+    background-color: #EA80FC80;
+}
+
+.addButton {
+    border-radius: 12px;
+    margin-left: 0.2em;
+    background-color: white;
+    color: black;
+    border: 2px solid #4CAF50;
+}
+
+.backButton {
+    float: right;
+    background-color: white;
 }
