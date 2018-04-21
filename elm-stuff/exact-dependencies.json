@@ -1,8 +1,0 @@
-{
-  "elm-lang/core": "5.1.1",
-  "elm-lang/html": "2.0.0",
-  "norpan/elm-html5-drag-drop": "1.1.0",
-  "styled-components/elm-styled": "1.0.0",
-  "Skinney/murmur3": "2.0.6",
-  "elm-lang/virtual-dom": "2.0.4"
-}
