@@ -55,9 +55,25 @@ body {
     background-color: white;
     color: black;
     border: 2px solid #4CAF50;
+    padding: 0.5em;
 }
 
 .backButton {
     float: right;
     background-color: white;
+}
+
+input {
+    border: none;
+    border-bottom: 2px solid #4CAF50;
+    padding: 0.8em;
+    margin-right: 0.3em;
+}
+
+input:focus {
+    outline: none;
+
+    border: 2px solid #4CAF50;
+    padding: 0.8em;
+    margin-right: 0.3em;
 }
