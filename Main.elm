@@ -147,7 +147,10 @@ update msg model =
                                     newDashboard = { oldDashboard | boards = updatedBoards }
 
                                 in
-                                    newDashboard
+                                    if newSchedulerId == fromSchedulerIndex then
+                                        model.dashboard
+                                    else
+                                        newDashboard
                 }, Cmd.none )
         SetClickedSchedulerIndex id ->
             ( { model | clickedSchedulerIndex = id }, Cmd.none )
@@ -164,9 +167,12 @@ update msg model =
                 newDashboard = { oldDashboard | boards = ( Board currentBoardTitle [] model.currentIndex "" 0 ) :: oldDashboard.boards
                     , currentBoardTitle = "" }
             in
-                ( { model | dashboard = newDashboard
-                    , currentIndex = model.currentIndex + 1
-                  }, Cmd.none )
+                if String.isEmpty currentBoardTitle then
+                    ( model, Cmd.none )
+                else
+                    ( { model | dashboard = newDashboard
+                        , currentIndex = model.currentIndex + 1
+                    }, Cmd.none )
         SwitchToBoard id ->
             ( { model | selectedBoardIndex = id, forwardToDetails = True }, Cmd.none )
         ChangeCurrentSchedulerTitle title ->

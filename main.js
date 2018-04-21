@@ -9789,7 +9789,7 @@ var _user$project$Main$update = F2(
 									var newDashboard = _elm_lang$core$Native_Utils.update(
 										oldDashboard,
 										{boards: updatedBoards});
-									return newDashboard;
+									return _elm_lang$core$Native_Utils.eq(_p10, fromSchedulerIndex) ? model.dashboard : newDashboard;
 								}
 							}()
 						}),
@@ -9834,7 +9834,7 @@ var _user$project$Main$update = F2(
 						},
 						currentBoardTitle: ''
 					});
-				return {
+				return _elm_lang$core$String$isEmpty(currentBoardTitle) ? {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none} : {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
